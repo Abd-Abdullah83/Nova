@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Nova — Your AI Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #12121a;
+    --bg3: #1a1a26;
+    --bg4: #22223a;
+    --surface: #1e1e2e;
+    --surface2: #2a2a3e;
+    --border: rgba(139,92,246,0.15);
+    --border2: rgba(139,92,246,0.3);
+    --accent: #8b5cf6;
+    --accent2: #a78bfa;
+    --accent3: #c4b5fd;
+    --glow: rgba(139,92,246,0.4);
+    --text: #f0eeff;
+    --text2: #a89fc0;
+    --text3: #6b6280;
+    --green: #34d399;
+    --green2: rgba(52,211,153,0.15);
+    --red: #f87171;
+    --red2: rgba(248,113,113,0.15);
+    --amber: #fbbf24;
+    --amber2: rgba(251,191,36,0.15);
+    --blue: #60a5fa;
+    --blue2: rgba(96,165,250,0.15);
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --r: 16px;
+    --r2: 12px;
+    --r3: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 0.5px solid var(--border);
+    background: var(--bg);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.4;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+  }
+  .logo-icon {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 0 20px var(--glow);
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%,100% { box-shadow: 0 0 20px var(--glow); }
+    50% { box-shadow: 0 0 30px rgba(139,92,246,0.7); }
+  }
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text3);
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .header-right { display:flex; gap:8px; align-items:center; }
+  .icon-btn {
+    width: 36px; height: 36px;
+    border: 0.5px solid var(--border2);
+    background: var(--surface);
+    border-radius: var(--r3);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    color: var(--text2);
+  }
+  .icon-btn:hover { background: var(--bg4); border-color: var(--accent); color: var(--accent2); }
+  .icon-btn.active { background: var(--bg4); border-color: var(--accent); color: var(--accent2); }
+
+  /* ── MAIN LAYOUT ── */
+  .app-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 72px;
+    border-right: 0.5px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .nav-btn {
+    width: 48px; height: 48px;
+    border-radius: var(--r2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 3px;
+    border: 0.5px solid transparent;
+    background: transparent;
+  }
+  .nav-btn:hover { background: var(--bg3); border-color: var(--border2); }
+  .nav-btn.active {
+    background: var(--bg4);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(139,92,246,0.2);
+  }
+  .nav-icon { font-size: 20px; }
+  .nav-label { font-size: 9px; color: var(--text3); font-family: var(--font-head); font-weight: 500; }
+  .nav-btn.active .nav-label { color: var(--accent2); }
+  .sidebar-sep { width: 36px; height: 0.5px; background: var(--border); margin: 6px 0; }
+
+  /* ── CONTENT AREA ── */
+  .content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── PANEL ── */
+  .panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+  .panel.active { display: flex; }
+
+  /* ─── CHAT PANEL ─── */
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  .welcome-card {
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r);
+    padding: 24px;
+    text-align: center;
+    max-width: 420px;
+    margin: auto;
+  }
+  .welcome-icon { font-size: 48px; margin-bottom: 12px; }
+  .welcome-title {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--text), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .welcome-sub { color: var(--text2); font-size: 13px; line-height: 1.6; margin-bottom: 20px; }
+  .quick-btns { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .quick-btn {
+    background: var(--bg4);
+    border: 0.5px solid var(--border2);
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 12px;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+  }
+  .quick-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .msg {
+    display: flex;
+    gap: 10px;
+    animation: msgIn 0.3s ease;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg.user { flex-direction: row-reverse; }
+  .msg-avatar {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .msg.user .msg-avatar { background: var(--accent); box-shadow: 0 0 10px var(--glow); }
+  .msg.nova .msg-avatar { background: var(--bg4); border: 0.5px solid var(--border2); }
+  .msg-bubble {
+    max-width: 75%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .msg.user .msg-bubble {
+    background: var(--accent);
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+  .msg.nova .msg-bubble {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+  }
+  .msg-time { font-size: 10px; color: var(--text3); margin-top: 4px; }
+  .msg.user .msg-time { text-align: right; }
+
+  .typing-indicator {
+    display: flex; gap: 5px; padding: 6px 0;
+  }
+  .typing-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: typingAnim 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingAnim { 0%,100%{opacity:0.2;transform:scale(0.8)} 50%{opacity:1;transform:scale(1.1)} }
+
+  /* ── CHAT INPUT ── */
+  .chat-input-area {
+    padding: 16px 20px;
+    border-top: 0.5px solid var(--border);
+    background: var(--bg);
+    flex-shrink: 0;
+  }
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 14px;
+    padding: 10px 12px;
+    transition: border-color 0.2s;
+  }
+  .input-row:focus-within { border-color: var(--accent); }
+  #chat-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    resize: none;
+    max-height: 100px;
+    line-height: 1.5;
+  }
+  #chat-input::placeholder { color: var(--text3); }
+  .input-actions { display: flex; gap: 6px; align-items: center; }
+  .send-btn {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    box-shadow: 0 0 12px var(--glow);
+  }
+  .send-btn:hover { transform: scale(1.05); box-shadow: 0 0 18px var(--glow); }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .mic-btn {
+    width: 36px; height: 36px;
+    background: var(--bg4);
+    border: 0.5px solid var(--border2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    color: var(--text2);
+  }
+  .mic-btn:hover { border-color: var(--accent); color: var(--accent2); }
+  .mic-btn.recording { background: var(--red2); border-color: var(--red); color: var(--red); animation: pulse-glow 1s infinite; }
+
+  /* ── API KEY BAR ── */
+  .api-bar {
+    padding: 10px 20px;
+    background: var(--bg2);
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  .api-bar label { font-size: 11px; color: var(--text3); white-space: nowrap; }
+  .api-bar input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r3);
+    padding: 6px 10px;
+    color: var(--text);
+    font-size: 12px;
+    outline: none;
+    font-family: var(--font-body);
+  }
+  .api-bar input:focus { border-color: var(--accent); }
+  .save-key-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: var(--r3);
+    padding: 6px 14px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .save-key-btn:hover { opacity: 0.9; }
+
+  /* ─── TASKS PANEL ─── */
+  .panel-header {
+    padding: 20px 20px 12px;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .panel-title {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .add-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 500;
+    display: flex; gap: 5px; align-items: center;
+  }
+  .add-btn:hover { opacity: 0.9; }
+  .panel-scroll { flex: 1; overflow-y: auto; padding: 16px 20px; }
+  .panel-scroll::-webkit-scrollbar { width: 4px; }
+  .panel-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  .task-item {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r2);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: all 0.2s;
+    animation: msgIn 0.3s ease;
+  }
+  .task-item:hover { border-color: var(--border2); }
+  .task-item.done { opacity: 0.5; }
+  .task-check {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border2);
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+  .task-check:hover { border-color: var(--accent); background: var(--bg4); }
+  .task-check.checked { background: var(--accent); border-color: var(--accent); color: white; }
+  .task-body { flex: 1; }
+  .task-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .task-item.done .task-title { text-decoration: line-through; color: var(--text3); }
+  .task-meta { display: flex; gap: 8px; align-items: center; }
+  .task-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .tag-work { background: var(--blue2); color: var(--blue); }
+  .tag-personal { background: var(--green2); color: var(--green); }
+  .tag-urgent { background: var(--red2); color: var(--red); }
+  .tag-idea { background: var(--amber2); color: var(--amber); }
+  .task-date { font-size: 11px; color: var(--text3); }
+  .task-del {
+    background: none; border: none; color: var(--text3);
+    cursor: pointer; font-size: 14px; padding: 2px;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .task-item:hover .task-del { opacity: 1; }
+  .task-del:hover { color: var(--red); }
+
+  .add-task-form {
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r2);
+    padding: 16px;
+    margin-bottom: 16px;
+    display: none;
+    animation: msgIn 0.2s ease;
+  }
+  .add-task-form.open { display: block; }
+  .form-row { margin-bottom: 10px; }
+  .form-row input, .form-row select {
+    width: 100%;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r3);
+    padding: 10px 12px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+    font-family: var(--font-body);
+  }
+  .form-row input:focus, .form-row select:focus { border-color: var(--accent); }
+  .form-row select option { background: var(--bg3); }
+  .form-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .cancel-btn {
+    background: none; border: 0.5px solid var(--border2);
+    border-radius: var(--r3); padding: 8px 16px;
+    color: var(--text2); font-size: 13px; cursor: pointer;
+    font-family: var(--font-body);
+  }
+  .confirm-btn {
+    background: var(--accent); border: none;
+    border-radius: var(--r3); padding: 8px 16px;
+    color: white; font-size: 13px; cursor: pointer;
+    font-family: var(--font-body); font-weight: 500;
+  }
+
+  /* ─── NOTES PANEL ─── */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    padding: 16px 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .note-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r2);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    min-height: 120px;
+    animation: msgIn 0.3s ease;
+  }
+  .note-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .note-card-title { font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text); }
+  .note-card-preview { font-size: 12px; color: var(--text2); line-height: 1.5; overflow: hidden; max-height: 60px; }
+  .note-card-date { font-size: 10px; color: var(--text3); margin-top: 10px; }
+  .note-card-del {
+    position: absolute; top: 8px; right: 10px;
+    background: none; border: none; color: var(--text3);
+    cursor: pointer; font-size: 14px; opacity: 0; transition: opacity 0.2s;
+  }
+  .note-card:hover .note-card-del { opacity: 1; }
+  .add-note-card {
+    background: var(--bg3);
+    border: 0.5px dashed var(--border2);
+    border-radius: var(--r2);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    min-height: 120px;
+    color: var(--text3);
+    font-size: 13px;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .add-note-card:hover { border-color: var(--accent); color: var(--accent2); }
+
+  /* Note Editor Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r);
+    padding: 24px;
+    width: 90%;
+    max-width: 560px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: msgIn 0.2s ease;
+  }
+  .modal input, .modal textarea {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r3);
+    padding: 10px 14px;
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    font-family: var(--font-body);
+    width: 100%;
+  }
+  .modal input:focus, .modal textarea:focus { border-color: var(--accent); }
+  .modal textarea { flex: 1; resize: none; min-height: 200px; line-height: 1.6; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; }
+  .modal-title { font-family: var(--font-head); font-size: 16px; font-weight: 600; }
+  .modal-close { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 20px; }
+
+  /* ─── WEATHER PANEL ─── */
+  .weather-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .weather-main {
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r);
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .weather-main::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), transparent);
+    pointer-events: none;
+  }
+  .weather-icon { font-size: 72px; line-height: 1; }
+  .weather-info { flex: 1; }
+  .weather-temp {
+    font-family: var(--font-head);
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--text), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .weather-desc { color: var(--text2); font-size: 14px; margin-top: 4px; text-transform: capitalize; }
+  .weather-loc { color: var(--text3); font-size: 12px; margin-top: 2px; }
+  .weather-meta { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+  .weather-meta-item { font-size: 12px; color: var(--text2); }
+  .weather-meta-item span { color: var(--text); font-weight: 500; }
+  .weather-forecast {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .forecast-day {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r2);
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .forecast-day-name { font-size: 11px; color: var(--text3); margin-bottom: 8px; }
+  .forecast-day-icon { font-size: 24px; margin-bottom: 8px; }
+  .forecast-day-temp { font-size: 14px; font-weight: 500; }
+  .forecast-day-low { font-size: 11px; color: var(--text3); }
+  .city-search {
+    display: flex; gap: 8px; margin-bottom: 16px;
+  }
+  .city-search input {
+    flex: 1;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r3);
+    padding: 10px 14px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+    font-family: var(--font-body);
+  }
+  .city-search input:focus { border-color: var(--accent); }
+  .city-search button {
+    background: var(--accent);
+    border: none;
+    border-radius: var(--r3);
+    padding: 10px 18px;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--font-body);
+  }
+
+  /* ─── SETTINGS PANEL ─── */
+  .settings-content { padding: 20px; overflow-y: auto; flex: 1; }
+  .settings-section {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r2);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .settings-section-title {
+    padding: 14px 16px;
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent2);
+    border-bottom: 0.5px solid var(--border);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .settings-item {
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.5px solid var(--border);
+    gap: 12px;
+  }
+  .settings-item:last-child { border-bottom: none; }
+  .settings-label { font-size: 14px; color: var(--text); }
+  .settings-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .settings-item input[type=text] {
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--r3);
+    padding: 7px 12px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+    font-family: var(--font-body);
+    width: 200px;
+  }
+  .settings-item input[type=text]:focus { border-color: var(--accent); }
+  .toggle {
+    width: 44px; height: 24px;
+    background: var(--bg4);
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    border: 0.5px solid var(--border2);
+    flex-shrink: 0;
+  }
+  .toggle.on { background: var(--accent); border-color: var(--accent); }
+  .toggle::after {
+    content: '';
+    position: absolute; top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s;
+  }
+  .toggle.on::after { transform: translateX(20px); }
+
+  /* ─── INFO BADGES ─── */
+  .info-strip {
+    display: flex;
+    gap: 8px;
+    padding: 8px 20px;
+    border-bottom: 0.5px solid var(--border);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    background: var(--bg);
+  }
+  .info-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .info-badge .badge-icon { font-size: 12px; }
+
+  /* ─── EMPTY STATE ─── */
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text3);
+    gap: 8px;
+    font-size: 13px;
+  }
+  .empty-state-icon { font-size: 32px; opacity: 0.4; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .sidebar { width: 58px; }
+    .nav-label { display: none; }
+    .nav-btn { width: 42px; height: 42px; }
+    .chat-messages { padding: 14px; }
+    .msg-bubble { max-width: 85%; }
+    .api-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    Nova
+  </div>
+  <div class="header-status">
+    <div class="status-dot"></div>
+    <span id="status-text">Ready</span>
+  </div>
+  <div class="header-right">
+    <div class="icon-btn" id="theme-btn" title="Toggle theme">☀️</div>
+    <div class="icon-btn" onclick="showAbout()" title="About">ℹ️</div>
+  </div>
+</header>
+
+<!-- API KEY BAR -->
+<div class="api-bar">
+  <label>Gemini API Key (Free):</label>
+  <input type="password" id="gemini-key-input" placeholder="AIza..." />
+  <button class="save-key-btn" onclick="saveKeys()">Save Keys</button>
+  <a href="https://aistudio.google.com/app/apikey" target="_blank" style="font-size:11px; color:var(--accent2); text-decoration:none;">Get free key ↗</a>
+</div>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-badge"><span class="badge-icon">🕐</span><span id="live-time">--:--</span></div>
+  <div class="info-badge"><span class="badge-icon">📅</span><span id="live-date">--</span></div>
+  <div class="info-badge"><span class="badge-icon">🌡️</span><span id="live-weather">Loading...</span></div>
+  <div class="info-badge"><span class="badge-icon">📋</span><span id="tasks-count">0 tasks</span></div>
+</div>
+
+<!-- APP BODY -->
+<div class="app-body">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="nav-btn active" onclick="switchPanel('chat')" id="nav-chat">
+      <div class="nav-icon">💬</div>
+      <div class="nav-label">Chat</div>
+    </div>
+    <div class="nav-btn" onclick="switchPanel('tasks')" id="nav-tasks">
+      <div class="nav-icon">✅</div>
+      <div class="nav-label">Tasks</div>
+    </div>
+    <div class="nav-btn" onclick="switchPanel('notes')" id="nav-notes">
+      <div class="nav-icon">📝</div>
+      <div class="nav-label">Notes</div>
+    </div>
+    <div class="nav-btn" onclick="switchPanel('weather')" id="nav-weather">
+      <div class="nav-icon">🌤</div>
+      <div class="nav-label">Weather</div>
+    </div>
+    <div class="sidebar-sep"></div>
+    <div class="nav-btn" onclick="switchPanel('settings')" id="nav-settings">
+      <div class="nav-icon">⚙️</div>
+      <div class="nav-label">Settings</div>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ═══ CHAT PANEL ═══ -->
+    <div class="panel active" id="panel-chat">
+      <div class="chat-messages" id="chat-messages">
+        <div class="welcome-card" id="welcome-card">
+          <div class="welcome-icon">✦</div>
+          <div class="welcome-title">Hi, I'm Nova</div>
+          <div class="welcome-sub">Your personal AI assistant. Ask me anything, manage tasks, check weather, take notes, and more.</div>
+          <div class="quick-btns">
+            <div class="quick-btn" onclick="quickSend('What\'s the time and date?')">🕐 Time & Date</div>
+            <div class="quick-btn" onclick="quickSend('What\'s the weather today?')">🌤 Weather</div>
+            <div class="quick-btn" onclick="quickSend('Show my tasks')">✅ My Tasks</div>
+            <div class="quick-btn" onclick="quickSend('Tell me a fun fact')">💡 Fun Fact</div>
+            <div class="quick-btn" onclick="quickSend('Help me write an email')">📧 Email Help</div>
+            <div class="quick-btn" onclick="quickSend('What can you do?')">🤖 Capabilities</div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="input-row">
+          <textarea id="chat-input" rows="1" placeholder="Ask Nova anything... (type or use mic)" onkeydown="handleInputKey(event)" oninput="autoResize(this)"></textarea>
+          <div class="input-actions">
+            <button class="mic-btn" id="mic-btn" onclick="toggleVoice()" title="Voice input">🎙️</button>
+            <button class="send-btn" id="send-btn" onclick="sendMessage()" title="Send">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TASKS PANEL ═══ -->
+    <div class="panel" id="panel-tasks">
+      <div class="panel-header">
+        <div class="panel-title">✅ Tasks</div>
+        <button class="add-btn" onclick="toggleTaskForm()">＋ Add Task</button>
+      </div>
+      <div class="panel-scroll">
+        <div class="add-task-form" id="add-task-form">
+          <div class="form-row"><input type="text" id="task-input" placeholder="Task title..." /></div>
+          <div class="form-row">
+            <select id="task-tag">
+              <option value="work">Work</option>
+              <option value="personal">Personal</option>
+              <option value="urgent">Urgent</option>
+              <option value="idea">Idea</option>
+            </select>
+          </div>
+          <div class="form-row"><input type="date" id="task-date" /></div>
+          <div class="form-actions">
+            <button class="cancel-btn" onclick="toggleTaskForm()">Cancel</button>
+            <button class="confirm-btn" onclick="addTask()">Add Task</button>
+          </div>
+        </div>
+        <div id="tasks-list"></div>
+      </div>
+    </div>
+
+    <!-- ═══ NOTES PANEL ═══ -->
+    <div class="panel" id="panel-notes">
+      <div class="panel-header">
+        <div class="panel-title">📝 Notes</div>
+      </div>
+      <div class="notes-grid" id="notes-grid">
+        <div class="add-note-card" onclick="openNote(null)">
+          <span style="font-size:24px">＋</span>
+          <span>New Note</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ WEATHER PANEL ═══ -->
+    <div class="panel" id="panel-weather">
+      <div class="panel-header">
+        <div class="panel-title">🌤 Weather</div>
+      </div>
+      <div class="weather-panel-content">
+        <div class="city-search">
+          <input type="text" id="city-input" placeholder="Search city (e.g. Lahore, London...)" value="Lahore" onkeydown="if(event.key==='Enter')fetchWeatherCity()" />
+          <button onclick="fetchWeatherCity()">Search</button>
+        </div>
+        <div id="weather-display">
+          <div class="empty-state">
+            <div class="empty-state-icon">🌍</div>
+            <div>Loading weather...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SETTINGS PANEL ═══ -->
+    <div class="panel" id="panel-settings">
+      <div class="panel-header">
+        <div class="panel-title">⚙️ Settings</div>
+      </div>
+      <div class="settings-content">
+        <div class="settings-section">
+          <div class="settings-section-title">Profile</div>
+          <div class="settings-item">
+            <div><div class="settings-label">Your Name</div><div class="settings-sub">Nova will use this to personalize responses</div></div>
+            <input type="text" id="user-name" placeholder="Your name..." />
+          </div>
+          <div class="settings-item">
+            <div><div class="settings-label">City / Location</div><div class="settings-sub">For weather and local info</div></div>
+            <input type="text" id="user-city" placeholder="Lahore" />
+          </div>
+          <div class="settings-item">
+            <div><div class="settings-label">Language</div></div>
+            <select id="user-lang" style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r3);padding:7px 12px;color:var(--text);font-size:13px;outline:none;">
+              <option value="en">English</option>
+              <option value="ur">Urdu</option>
+              <option value="ar">Arabic</option>
+              <option value="fr">French</option>
+              <option value="es">Spanish</option>
+            </select>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">Nova Behavior</div>
+          <div class="settings-item">
+            <div><div class="settings-label">Voice Response</div><div class="settings-sub">Nova speaks her replies aloud</div></div>
+            <div class="toggle" id="toggle-voice" onclick="toggleSetting('voice')"></div>
+          </div>
+          <div class="settings-item">
+            <div><div class="settings-label">Proactive Suggestions</div><div class="settings-sub">Nova suggests things based on context</div></div>
+            <div class="toggle on" id="toggle-suggest" onclick="toggleSetting('suggest')"></div>
+          </div>
+          <div class="settings-item">
+            <div><div class="settings-label">Remember Conversations</div><div class="settings-sub">Save chat history to localStorage</div></div>
+            <div class="toggle on" id="toggle-memory" onclick="toggleSetting('memory')"></div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">API Keys (Free)</div>
+          <div class="settings-item">
+            <div><div class="settings-label">Gemini API Key</div><div class="settings-sub">From Google AI Studio (Free)</div></div>
+            <input type="password" id="settings-gemini-key" placeholder="AIza..." />
+          </div>
+        </div>
+        <div style="text-align:center; padding: 16px 0;">
+          <button class="confirm-btn" onclick="saveSettings()">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NOTE EDITOR MODAL -->
+<div class="modal-overlay" id="note-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📝 Note</div>
+      <button class="modal-close" onclick="closeNote()">✕</button>
+    </div>
+    <input type="text" id="note-title-input" placeholder="Note title..." />
+    <textarea id="note-body-input" placeholder="Write your note here..."></textarea>
+    <div class="form-actions">
+      <button class="cancel-btn" onclick="closeNote()">Cancel</button>
+      <button class="confirm-btn" onclick="saveNote()">Save Note</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// NOVA AI ASSISTANT — CORE ENGINE
+// ════════════════════════════════════════
+
+// ── STATE ──
+let novaState = {
+  geminiKey: '',
+  userName: 'Friend',
+  userCity: 'Lahore',
+  userLang: 'en',
+  voiceEnabled: false,
+  suggestEnabled: true,
+  memoryEnabled: true,
+  chatHistory: [],
+  tasks: [],
+  notes: [],
+  weatherData: null,
+  currentNote: null,
+  recognition: null,
+  isRecording: false,
+  settings: { voice: false, suggest: true, memory: true }
+};
+
+// ── INIT ──
+function init() {
+  loadState();
+  updateClock();
+  setInterval(updateClock, 1000);
+  fetchWeather(novaState.userCity);
+  renderTasks();
+  renderNotes();
+  syncSettingsUI();
+  loadChatHistory();
+}
+
+function loadState() {
+  const saved = localStorage.getItem('nova_state');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      Object.assign(novaState, parsed);
+    } catch(e) {}
+  }
+  // Also check input fields
+  document.getElementById('gemini-key-input').value = novaState.geminiKey || '';
+  document.getElementById('user-name').value = novaState.userName || '';
+  document.getElementById('user-city').value = novaState.userCity || 'Lahore';
+  document.getElementById('user-lang').value = novaState.userLang || 'en';
+  document.getElementById('settings-gemini-key').value = novaState.geminiKey || '';
+}
+
+function saveState() {
+  localStorage.setItem('nova_state', JSON.stringify(novaState));
+}
+
+function saveKeys() {
+  novaState.geminiKey = document.getElementById('gemini-key-input').value.trim();
+  saveState();
+  showToast('API key saved! ✓');
+}
+
+function saveSettings() {
+  novaState.userName = document.getElementById('user-name').value.trim() || 'Friend';
+  novaState.userCity = document.getElementById('user-city').value.trim() || 'Lahore';
+  novaState.userLang = document.getElementById('user-lang').value;
+  const k = document.getElementById('settings-gemini-key').value.trim();
+  if (k) novaState.geminiKey = k;
+  document.getElementById('gemini-key-input').value = novaState.geminiKey;
+  saveState();
+  showToast('Settings saved! ✓');
+}
+
+// ── CLOCK ──
+function updateClock() {
+  const now = new Date();
+  document.getElementById('live-time').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  document.getElementById('live-date').textContent = now.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+// ── PANEL SWITCHING ──
+function switchPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  if (name === 'weather' && !novaState.weatherData) fetchWeather(novaState.userCity);
+}
+
+// ── WEATHER (Open-Meteo — 100% Free, No Key) ──
+const weatherCodes = {
+  0: ['☀️','Clear sky'], 1:['🌤','Mainly clear'], 2:['⛅','Partly cloudy'], 3:['☁️','Overcast'],
+  45:['🌫','Fog'], 48:['🌫','Icy fog'], 51:['🌦','Light drizzle'], 53:['🌧','Drizzle'],
+  55:['🌧','Heavy drizzle'], 61:['🌧','Slight rain'], 63:['🌧','Moderate rain'],
+  65:['🌧','Heavy rain'], 71:['🌨','Slight snow'], 73:['❄️','Moderate snow'],
+  75:['❄️','Heavy snow'], 80:['🌦','Rain showers'], 81:['🌧','Heavy showers'],
+  95:['⛈','Thunderstorm'], 96:['⛈','Thunderstorm w/ hail'], 99:['⛈','Heavy thunderstorm']
+};
+
+async function fetchWeather(city) {
+  try {
+    document.getElementById('live-weather').textContent = 'Loading...';
+    const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`);
+    const geoData = await geo.json();
+    if (!geoData.results || !geoData.results.length) {
+      document.getElementById('live-weather').textContent = 'City not found';
+      return;
+    }
+    const { latitude, longitude, name, country } = geoData.results[0];
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=5`);
+    const data = await res.json();
+    const cur = data.current;
+    const daily = data.daily;
+    const [icon, desc] = weatherCodes[cur.weathercode] || ['🌡️', 'Unknown'];
+    novaState.weatherData = { temp: Math.round(cur.temperature_2m), icon, desc, humidity: cur.relative_humidity_2m, wind: Math.round(cur.wind_speed_10m), city: `${name}, ${country}`, daily };
+    saveState();
+    document.getElementById('live-weather').textContent = `${icon} ${Math.round(cur.temperature_2m)}°C`;
+    renderWeatherPanel();
+  } catch(e) {
+    document.getElementById('live-weather').textContent = 'Weather error';
+  }
+}
+
+function fetchWeatherCity() {
+  const city = document.getElementById('city-input').value.trim() || 'Lahore';
+  fetchWeather(city);
+}
+
+function renderWeatherPanel() {
+  const w = novaState.weatherData;
+  if (!w) return;
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let forecastHTML = '';
+  if (w.daily) {
+    for (let i = 1; i < Math.min(6, w.daily.time.length); i++) {
+      const d = new Date(w.daily.time[i]);
+      const [fi, fd] = weatherCodes[w.daily.weathercode[i]] || ['🌡️',''];
+      forecastHTML += `<div class="forecast-day">
+        <div class="forecast-day-name">${days[d.getDay()]}</div>
+        <div class="forecast-day-icon">${fi}</div>
+        <div class="forecast-day-temp">${Math.round(w.daily.temperature_2m_max[i])}°</div>
+        <div class="forecast-day-low">${Math.round(w.daily.temperature_2m_min[i])}°</div>
+      </div>`;
+    }
+  }
+  document.getElementById('weather-display').innerHTML = `
+    <div class="weather-main">
+      <div class="weather-icon">${w.icon}</div>
+      <div class="weather-info">
+        <div class="weather-temp">${w.temp}°C</div>
+        <div class="weather-desc">${w.desc}</div>
+        <div class="weather-loc">📍 ${w.city}</div>
+        <div class="weather-meta">
+          <div class="weather-meta-item">💧 Humidity: <span>${w.humidity}%</span></div>
+          <div class="weather-meta-item">💨 Wind: <span>${w.wind} km/h</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="weather-forecast">${forecastHTML}</div>`;
+}
+
+// ── TASKS ──
+function renderTasks() {
+  const list = document.getElementById('tasks-list');
+  const tasks = novaState.tasks;
+  document.getElementById('tasks-count').textContent = `${tasks.filter(t=>!t.done).length} tasks`;
+  if (!tasks.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">✅</div><div>No tasks yet. Add one!</div></div>`;
+    return;
+  }
+  list.innerHTML = tasks.map((t, i) => `
+    <div class="task-item ${t.done ? 'done' : ''}">
+      <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask(${i})">${t.done ? '✓' : ''}</div>
+      <div class="task-body">
+        <div class="task-title">${escHtml(t.title)}</div>
+        <div class="task-meta">
+          <span class="task-tag tag-${t.tag}">${t.tag}</span>
+          ${t.date ? `<span class="task-date">📅 ${t.date}</span>` : ''}
+        </div>
+      </div>
+      <button class="task-del" onclick="deleteTask(${i})">✕</button>
+    </div>`).join('');
+}
+
+function toggleTaskForm() {
+  const f = document.getElementById('add-task-form');
+  f.classList.toggle('open');
+  if (f.classList.contains('open')) document.getElementById('task-input').focus();
+}
+
+function addTask() {
+  const title = document.getElementById('task-input').value.trim();
+  if (!title) return;
+  novaState.tasks.unshift({
+    id: Date.now(),
+    title,
+    tag: document.getElementById('task-tag').value,
+    date: document.getElementById('task-date').value,
+    done: false,
+    created: new Date().toISOString()
+  });
+  document.getElementById('task-input').value = '';
+  document.getElementById('task-date').value = '';
+  toggleTaskForm();
+  renderTasks();
+  saveState();
+}
+
+function toggleTask(i) {
+  novaState.tasks[i].done = !novaState.tasks[i].done;
+  renderTasks(); saveState();
+}
+
+function deleteTask(i) {
+  novaState.tasks.splice(i, 1);
+  renderTasks(); saveState();
+}
+
+// ── NOTES ──
+function renderNotes() {
+  const grid = document.getElementById('notes-grid');
+  const notes = novaState.notes;
+  let html = `<div class="add-note-card" onclick="openNote(null)"><span style="font-size:24px">＋</span><span>New Note</span></div>`;
+  html += notes.map((n, i) => `
+    <div class="note-card" onclick="openNote(${i})">
+      <div class="note-card-title">${escHtml(n.title || 'Untitled')}</div>
+      <div class="note-card-preview">${escHtml(n.body || '').substring(0, 100)}</div>
+      <div class="note-card-date">${new Date(n.updated).toLocaleDateString()}</div>
+      <button class="note-card-del" onclick="event.stopPropagation(); deleteNote(${i})">✕</button>
+    </div>`).join('');
+  grid.innerHTML = html;
+}
+
+function openNote(i) {
+  novaState.currentNote = i;
+  const n = i !== null ? novaState.notes[i] : null;
+  document.getElementById('note-title-input').value = n ? n.title : '';
+  document.getElementById('note-body-input').value = n ? n.body : '';
+  document.getElementById('note-modal').classList.add('open');
+  setTimeout(() => document.getElementById(n ? 'note-body-input' : 'note-title-input').focus(), 100);
+}
+
+function closeNote() {
+  document.getElementById('note-modal').classList.remove('open');
+}
+
+function saveNote() {
+  const title = document.getElementById('note-title-input').value.trim() || 'Untitled';
+  const body = document.getElementById('note-body-input').value.trim();
+  const note = { title, body, updated: new Date().toISOString() };
+  if (novaState.currentNote !== null) {
+    novaState.notes[novaState.currentNote] = note;
+  } else {
+    novaState.notes.unshift(note);
+  }
+  closeNote();
+  renderNotes();
+  saveState();
+}
+
+function deleteNote(i) {
+  novaState.notes.splice(i, 1);
+  renderNotes(); saveState();
+}
+
+// ── CHAT ──
+function loadChatHistory() {
+  if (!novaState.memoryEnabled) return;
+  const saved = localStorage.getItem('nova_chat');
+  if (saved) {
+    try { novaState.chatHistory = JSON.parse(saved); } catch(e) {}
+  }
+}
+
+function saveChatHistory() {
+  if (novaState.memoryEnabled) {
+    // Keep last 40 messages
+    const trimmed = novaState.chatHistory.slice(-40);
+    localStorage.setItem('nova_chat', JSON.stringify(trimmed));
+  }
+}
+
+function handleInputKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+function quickSend(text) {
+  document.getElementById('chat-input').value = text;
+  sendMessage();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = ''; input.style.height = 'auto';
+  document.getElementById('send-btn').disabled = true;
+  document.getElementById('welcome-card')?.remove();
+  document.getElementById('status-text').textContent = 'Thinking...';
+  addMsgToUI('user', text);
+  const typingEl = showTyping();
+  const reply = await novaReply(text);
+  typingEl.remove();
+  addMsgToUI('nova', reply);
+  document.getElementById('send-btn').disabled = false;
+  document.getElementById('status-text').textContent = 'Ready';
+  if (novaState.voiceEnabled) speak(reply);
+}
+
+function addMsgToUI(role, text) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const now = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+  div.innerHTML = `
+    <div class="msg-avatar">${role === 'user' ? '👤' : '✦'}</div>
+    <div>
+      <div class="msg-bubble">${formatMsgText(text)}</div>
+      <div class="msg-time">${now}</div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  novaState.chatHistory.push({ role: role === 'user' ? 'user' : 'assistant', content: text });
+  saveChatHistory();
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg nova';
+  div.id = 'typing-msg';
+  div.innerHTML = `<div class="msg-avatar">✦</div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+// ── NOVA BRAIN ──
+async function novaReply(text) {
+  const lower = text.toLowerCase();
+
+  // ── LOCAL INTENTS (no API needed) ──
+  if (/\b(time|what time|current time)\b/.test(lower)) {
+    const now = new Date();
+    return `🕐 It's currently **${now.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' })}**.`;
+  }
+  if (/\b(date|today|what day|what's today)\b/.test(lower) && !/weather/.test(lower)) {
+    const now = new Date();
+    return `📅 Today is **${now.toLocaleDateString([], { weekday:'long', year:'numeric', month:'long', day:'numeric' })}**.`;
+  }
+  if (/\b(weather|temperature|forecast|rain|sunny|hot|cold)\b/.test(lower)) {
+    if (novaState.weatherData) {
+      const w = novaState.weatherData;
+      return `${w.icon} The weather in **${w.city}** is currently **${w.temp}°C** with ${w.desc.toLowerCase()}.\n\n💧 Humidity: ${w.humidity}% | 💨 Wind: ${w.wind} km/h\n\nYou can see the detailed forecast in the Weather tab!`;
+    }
+    await fetchWeather(novaState.userCity);
+    if (novaState.weatherData) {
+      const w = novaState.weatherData;
+      return `${w.icon} Current weather in **${w.city}**: **${w.temp}°C**, ${w.desc.toLowerCase()}. Humidity: ${w.humidity}%.`;
+    }
+    return "I couldn't fetch the weather right now. Check the Weather tab directly.";
+  }
+  if (/\b(show|list|my) tasks\b/.test(lower) || /\btask list\b/.test(lower)) {
+    const pending = novaState.tasks.filter(t => !t.done);
+    if (!pending.length) return "✅ You have no pending tasks! You're all caught up.";
+    return `📋 You have **${pending.length}** pending task${pending.length>1?'s':''}:\n\n${pending.map((t,i) => `${i+1}. ${t.title}${t.date ? ` (due ${t.date})` : ''}`).join('\n')}\n\nSwitch to the Tasks tab to manage them!`;
+  }
+  if (/add task[:\s]+(.+)/i.test(text)) {
+    const title = text.match(/add task[:\s]+(.+)/i)[1].trim();
+    novaState.tasks.unshift({ id: Date.now(), title, tag: 'personal', done: false, created: new Date().toISOString() });
+    renderTasks(); saveState();
+    return `✅ Added task: **"${title}"**! You can see it in the Tasks tab.`;
+  }
+  if (/\b(notes?|my notes|show notes)\b/.test(lower) && /\b(show|list|open)\b/.test(lower)) {
+    if (!novaState.notes.length) return "📝 You have no notes yet. Tap the Notes tab to create one!";
+    return `📝 You have **${novaState.notes.length}** note${novaState.notes.length>1?'s':''}:\n\n${novaState.notes.slice(0,5).map((n,i)=>`${i+1}. **${n.title}**`).join('\n')}\n\nOpen the Notes tab to view and edit them!`;
+  }
+  if (/what can you do|your capabilities|help me|how to use/i.test(lower)) {
+    return `I'm **Nova**, your personal AI assistant! Here's what I can do:\n\n💬 **Chat** — Answer questions, give advice, help with writing\n📅 **Date & Time** — Just ask!\n🌤 **Weather** — Real-time weather for any city\n✅ **Tasks** — "Add task: call doctor" or check the Tasks tab\n📝 **Notes** — Take and organize notes in the Notes tab\n📧 **Email drafts** — Ask me to write an email\n🔍 **Research** — Answer knowledge questions\n🌐 **Multi-language** — Talk to me in Urdu, Arabic, etc.\n\nI'm powered by **Gemini AI (free)** + local tools. Try asking me anything!`;
+  }
+  if (/\b(hello|hi|hey|salaam|asslam|namaste)\b/i.test(lower)) {
+    const greetings = [`Hey ${novaState.userName}! 👋 Great to hear from you. What can I help you with today?`, `Hello ${novaState.userName}! ✦ I'm here and ready. What's on your mind?`, `Salaam ${novaState.userName}! 🌟 How can I assist you right now?`];
+    return greetings[Math.floor(Math.random() * greetings.length)];
+  }
+  if (/\b(urdu|roman urdu|اردو)\b/i.test(lower)) {
+    return `Han zaroor! Main Urdu mein bhi baat kar sakta hun. Batao kya madad chahiye? 😊\n\nAap mujhse kisi bhi topic pe pooch sakte hain — weather, tasks, ya koi bhi sawaal!`;
+  }
+
+  // ── GEMINI API ──
+  if (novaState.geminiKey) {
+    return await callGemini(text);
+  }
+
+  // ── FALLBACK ──
+  return `I'd love to give you a smarter answer, but I need a **Gemini API key** (free!) to access my full AI brain.\n\nEnter your key in the bar at the top — get it free at **aistudio.google.com**.\n\nFor now, I can still help with:\n• ⏰ Time & date\n• 🌤 Weather\n• ✅ Tasks & notes\n• Basic questions`;
+}
+
+// ── GEMINI FREE API ──
+async function callGemini(userMessage) {
+  try {
+    document.getElementById('status-text').textContent = 'Calling Gemini...';
+    const userName = novaState.userName;
+    const city = novaState.userCity;
+    const now = new Date();
+    const systemContext = `You are Nova, a friendly, smart, and personalized AI assistant for ${userName}. You are concise, warm, and helpful. The user is from ${city}. Current date: ${now.toDateString()}, Time: ${now.toLocaleTimeString()}. ${novaState.weatherData ? `Current weather in ${city}: ${novaState.weatherData.temp}°C, ${novaState.weatherData.desc}.` : ''} Keep responses under 200 words unless asked for detail. Use markdown formatting (bold, lists) where helpful. If asked in Urdu or another language, respond in that language.`;
+    
+    // Build conversation history for context
+    const historyMessages = novaState.chatHistory.slice(-10).map(m => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: m.content }]
+    }));
+
+    const body = {
+      system_instruction: { parts: [{ text: systemContext }] },
+      contents: [
+        ...historyMessages,
+        { role: 'user', parts: [{ text: userMessage }] }
+      ],
+      generationConfig: { maxOutputTokens: 500, temperature: 0.7 }
+    };
+
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${novaState.geminiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+    if (data.error) return `⚠️ Gemini error: ${data.error.message}. Check your API key.`;
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't get a response. Try again!";
+  } catch (e) {
+    return `⚠️ Network error calling Gemini. Check your internet connection.\n\nError: ${e.message}`;
+  }
+}
+
+// ── VOICE INPUT ──
+function toggleVoice() {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    showToast('Voice not supported in this browser. Try Chrome!');
+    return;
+  }
+  if (novaState.isRecording) {
+    novaState.recognition?.stop();
+    return;
+  }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SR();
+  recognition.lang = novaState.userLang === 'ur' ? 'ur-PK' : 'en-US';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.onstart = () => {
+    novaState.isRecording = true;
+    document.getElementById('mic-btn').classList.add('recording');
+    document.getElementById('mic-btn').textContent = '🔴';
+    document.getElementById('status-text').textContent = 'Listening...';
+  };
+  recognition.onresult = (e) => {
+    const transcript = e.results[0][0].transcript;
+    document.getElementById('chat-input').value = transcript;
+    autoResize(document.getElementById('chat-input'));
+    sendMessage();
+  };
+  recognition.onend = () => {
+    novaState.isRecording = false;
+    document.getElementById('mic-btn').classList.remove('recording');
+    document.getElementById('mic-btn').textContent = '🎙️';
+    document.getElementById('status-text').textContent = 'Ready';
+  };
+  recognition.onerror = (e) => {
+    showToast('Voice error: ' + e.error);
+    recognition.stop();
+  };
+  novaState.recognition = recognition;
+  recognition.start();
+}
+
+// ── TEXT TO SPEECH ──
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  const clean = text.replace(/\*\*/g, '').replace(/#+/g, '').replace(/\n/g, ' ');
+  const utter = new SpeechSynthesisUtterance(clean.substring(0, 300));
+  utter.lang = novaState.userLang === 'ur' ? 'ur-PK' : 'en-US';
+  utter.rate = 0.95;
+  window.speechSynthesis.speak(utter);
+}
+
+// ── SETTINGS TOGGLES ──
+function toggleSetting(key) {
+  novaState.settings[key] = !novaState.settings[key];
+  if (key === 'voice') novaState.voiceEnabled = novaState.settings[key];
+  if (key === 'suggest') novaState.suggestEnabled = novaState.settings[key];
+  if (key === 'memory') novaState.memoryEnabled = novaState.settings[key];
+  document.getElementById('toggle-' + key).classList.toggle('on', novaState.settings[key]);
+  saveState();
+}
+
+function syncSettingsUI() {
+  ['voice','suggest','memory'].forEach(k => {
+    const val = k === 'voice' ? novaState.voiceEnabled : k === 'suggest' ? novaState.suggestEnabled : novaState.memoryEnabled;
+    document.getElementById('toggle-' + k).classList.toggle('on', val);
+  });
+}
+
+// ── UTILS ──
+function escHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function formatMsgText(t) {
+  return escHtml(t)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+}
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--accent);color:white;padding:10px 18px;border-radius:20px;font-size:13px;z-index:999;animation:msgIn 0.2s ease;pointer-events:none;';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+function showAbout() {
+  switchPanel('chat');
+  document.getElementById('welcome-card')?.remove();
+  addMsgToUI('nova', `**Nova AI Assistant** ✦\n\nBuilt with:\n• 🤖 **Gemini 2.0 Flash** (Google AI — Free)\n• 🌤 **Open-Meteo** (Weather — 100% Free)\n• 🎙️ **Web Speech API** (Voice — Built-in)\n• 💾 **localStorage** (Memory — Local)\n\nNo subscriptions. No paid APIs required.\nAll data stored locally on your device.\n\nVersion 1.0 — Made for you, ${novaState.userName}!`);
+}
+
+// ── LAUNCH ──
+init();
+</script>
+</body>
+</html>
