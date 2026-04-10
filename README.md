@@ -16,7 +16,7 @@ Chat · Tasks · Notes · Weather · Voice · Memory — zero subscriptions requ
 
 <br/>
 
-![Nova Preview](https://raw.githubusercontent.com/Abd-Abdullah83/Nova/main/preview.png)
+![Nova Preview](https://raw.githubusercontent.com/Abd-Abdullah83/Nova/main/Nova.png)
 
 </div>
 
