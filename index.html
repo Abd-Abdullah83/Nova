@@ -117,7 +117,6 @@
     color: var(--text2);
   }
   .icon-btn:hover { background: var(--bg4); border-color: var(--accent); color: var(--accent2); }
-  .icon-btn.active { background: var(--bg4); border-color: var(--accent); color: var(--accent2); }
 
   /* ── MAIN LAYOUT ── */
   .app-body {
@@ -162,19 +161,12 @@
   .nav-btn.active .nav-label { color: var(--accent2); }
   .sidebar-sep { width: 36px; height: 0.5px; background: var(--border); margin: 6px 0; }
 
-  /* ── CONTENT AREA ── */
-  .content {
-    flex: 1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* ── PANEL ── */
+  /* ── CONTENT ── */
+  .content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
   .panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
   .panel.active { display: flex; }
 
-  /* ─── CHAT PANEL ─── */
+  /* ── CHAT ── */
   .chat-messages {
     flex: 1;
     overflow-y: auto;
@@ -221,15 +213,8 @@
   }
   .quick-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-  .msg {
-    display: flex;
-    gap: 10px;
-    animation: msgIn 0.3s ease;
-  }
-  @keyframes msgIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .msg { display: flex; gap: 10px; animation: msgIn 0.3s ease; }
+  @keyframes msgIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
   .msg.user { flex-direction: row-reverse; }
   .msg-avatar {
     width: 32px; height: 32px;
@@ -247,23 +232,12 @@
     font-size: 14px;
     line-height: 1.6;
   }
-  .msg.user .msg-bubble {
-    background: var(--accent);
-    color: white;
-    border-bottom-right-radius: 4px;
-  }
-  .msg.nova .msg-bubble {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    color: var(--text);
-    border-bottom-left-radius: 4px;
-  }
+  .msg.user .msg-bubble { background: var(--accent); color: white; border-bottom-right-radius: 4px; }
+  .msg.nova .msg-bubble { background: var(--surface); border: 0.5px solid var(--border); color: var(--text); border-bottom-left-radius: 4px; }
   .msg-time { font-size: 10px; color: var(--text3); margin-top: 4px; }
   .msg.user .msg-time { text-align: right; }
 
-  .typing-indicator {
-    display: flex; gap: 5px; padding: 6px 0;
-  }
+  .typing-indicator { display: flex; gap: 5px; padding: 6px 0; }
   .typing-dot {
     width: 7px; height: 7px;
     border-radius: 50%;
@@ -372,7 +346,7 @@
   }
   .save-key-btn:hover { opacity: 0.9; }
 
-  /* ─── TASKS PANEL ─── */
+  /* ── TASKS ── */
   .panel-header {
     padding: 20px 20px 12px;
     border-bottom: 0.5px solid var(--border);
@@ -381,11 +355,7 @@
     align-items: center;
     flex-shrink: 0;
   }
-  .panel-title {
-    font-family: var(--font-head);
-    font-size: 18px;
-    font-weight: 700;
-  }
+  .panel-title { font-family: var(--font-head); font-size: 18px; font-weight: 700; }
   .add-btn {
     background: var(--accent);
     border: none;
@@ -434,22 +404,13 @@
   .task-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
   .task-item.done .task-title { text-decoration: line-through; color: var(--text3); }
   .task-meta { display: flex; gap: 8px; align-items: center; }
-  .task-tag {
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-weight: 500;
-  }
+  .task-tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
   .tag-work { background: var(--blue2); color: var(--blue); }
   .tag-personal { background: var(--green2); color: var(--green); }
   .tag-urgent { background: var(--red2); color: var(--red); }
   .tag-idea { background: var(--amber2); color: var(--amber); }
   .task-date { font-size: 11px; color: var(--text3); }
-  .task-del {
-    background: none; border: none; color: var(--text3);
-    cursor: pointer; font-size: 14px; padding: 2px;
-    opacity: 0; transition: opacity 0.2s;
-  }
+  .task-del { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 14px; padding: 2px; opacity: 0; transition: opacity 0.2s; }
   .task-item:hover .task-del { opacity: 1; }
   .task-del:hover { color: var(--red); }
 
@@ -478,20 +439,10 @@
   .form-row input:focus, .form-row select:focus { border-color: var(--accent); }
   .form-row select option { background: var(--bg3); }
   .form-actions { display: flex; gap: 8px; justify-content: flex-end; }
-  .cancel-btn {
-    background: none; border: 0.5px solid var(--border2);
-    border-radius: var(--r3); padding: 8px 16px;
-    color: var(--text2); font-size: 13px; cursor: pointer;
-    font-family: var(--font-body);
-  }
-  .confirm-btn {
-    background: var(--accent); border: none;
-    border-radius: var(--r3); padding: 8px 16px;
-    color: white; font-size: 13px; cursor: pointer;
-    font-family: var(--font-body); font-weight: 500;
-  }
+  .cancel-btn { background: none; border: 0.5px solid var(--border2); border-radius: var(--r3); padding: 8px 16px; color: var(--text2); font-size: 13px; cursor: pointer; font-family: var(--font-body); }
+  .confirm-btn { background: var(--accent); border: none; border-radius: var(--r3); padding: 8px 16px; color: white; font-size: 13px; cursor: pointer; font-family: var(--font-body); font-weight: 500; }
 
-  /* ─── NOTES PANEL ─── */
+  /* ── NOTES ── */
   .notes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -515,11 +466,7 @@
   .note-card-title { font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text); }
   .note-card-preview { font-size: 12px; color: var(--text2); line-height: 1.5; overflow: hidden; max-height: 60px; }
   .note-card-date { font-size: 10px; color: var(--text3); margin-top: 10px; }
-  .note-card-del {
-    position: absolute; top: 8px; right: 10px;
-    background: none; border: none; color: var(--text3);
-    cursor: pointer; font-size: 14px; opacity: 0; transition: opacity 0.2s;
-  }
+  .note-card-del { position: absolute; top: 8px; right: 10px; background: none; border: none; color: var(--text3); cursor: pointer; font-size: 14px; opacity: 0; transition: opacity 0.2s; }
   .note-card:hover .note-card-del { opacity: 1; }
   .add-note-card {
     background: var(--bg3);
@@ -536,16 +483,8 @@
   }
   .add-note-card:hover { border-color: var(--accent); color: var(--accent2); }
 
-  /* Note Editor Modal */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-  }
+  /* ── MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
   .modal-overlay.open { display: flex; }
   .modal {
     background: var(--bg3);
@@ -577,12 +516,8 @@
   .modal-title { font-family: var(--font-head); font-size: 16px; font-weight: 600; }
   .modal-close { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 20px; }
 
-  /* ─── WEATHER PANEL ─── */
-  .weather-panel-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-  }
+  /* ── WEATHER ── */
+  .weather-panel-content { flex: 1; overflow-y: auto; padding: 20px; }
   .weather-main {
     background: var(--bg3);
     border: 0.5px solid var(--border2);
@@ -595,171 +530,50 @@
     position: relative;
     overflow: hidden;
   }
-  .weather-main::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(139,92,246,0.08), transparent);
-    pointer-events: none;
-  }
+  .weather-main::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(139,92,246,0.08), transparent); pointer-events: none; }
   .weather-icon { font-size: 72px; line-height: 1; }
   .weather-info { flex: 1; }
-  .weather-temp {
-    font-family: var(--font-head);
-    font-size: 56px;
-    font-weight: 800;
-    line-height: 1;
-    background: linear-gradient(135deg, var(--text), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  .weather-temp { font-family: var(--font-head); font-size: 56px; font-weight: 800; line-height: 1; background: linear-gradient(135deg, var(--text), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .weather-desc { color: var(--text2); font-size: 14px; margin-top: 4px; text-transform: capitalize; }
   .weather-loc { color: var(--text3); font-size: 12px; margin-top: 2px; }
   .weather-meta { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
   .weather-meta-item { font-size: 12px; color: var(--text2); }
   .weather-meta-item span { color: var(--text); font-weight: 500; }
-  .weather-forecast {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .forecast-day {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--r2);
-    padding: 14px 10px;
-    text-align: center;
-  }
+  .weather-forecast { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .forecast-day { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 14px 10px; text-align: center; }
   .forecast-day-name { font-size: 11px; color: var(--text3); margin-bottom: 8px; }
   .forecast-day-icon { font-size: 24px; margin-bottom: 8px; }
   .forecast-day-temp { font-size: 14px; font-weight: 500; }
   .forecast-day-low { font-size: 11px; color: var(--text3); }
-  .city-search {
-    display: flex; gap: 8px; margin-bottom: 16px;
-  }
-  .city-search input {
-    flex: 1;
-    background: var(--surface);
-    border: 0.5px solid var(--border2);
-    border-radius: var(--r3);
-    padding: 10px 14px;
-    color: var(--text);
-    font-size: 13px;
-    outline: none;
-    font-family: var(--font-body);
-  }
+  .city-search { display: flex; gap: 8px; margin-bottom: 16px; }
+  .city-search input { flex: 1; background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--r3); padding: 10px 14px; color: var(--text); font-size: 13px; outline: none; font-family: var(--font-body); }
   .city-search input:focus { border-color: var(--accent); }
-  .city-search button {
-    background: var(--accent);
-    border: none;
-    border-radius: var(--r3);
-    padding: 10px 18px;
-    color: white;
-    font-size: 13px;
-    cursor: pointer;
-    font-family: var(--font-body);
-  }
+  .city-search button { background: var(--accent); border: none; border-radius: var(--r3); padding: 10px 18px; color: white; font-size: 13px; cursor: pointer; font-family: var(--font-body); }
 
-  /* ─── SETTINGS PANEL ─── */
+  /* ── SETTINGS ── */
   .settings-content { padding: 20px; overflow-y: auto; flex: 1; }
-  .settings-section {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--r2);
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
-  .settings-section-title {
-    padding: 14px 16px;
-    font-family: var(--font-head);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent2);
-    border-bottom: 0.5px solid var(--border);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-  .settings-item {
-    padding: 14px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 0.5px solid var(--border);
-    gap: 12px;
-  }
+  .settings-section { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--r2); margin-bottom: 16px; overflow: hidden; }
+  .settings-section-title { padding: 14px 16px; font-family: var(--font-head); font-size: 13px; font-weight: 600; color: var(--accent2); border-bottom: 0.5px solid var(--border); letter-spacing: 0.5px; text-transform: uppercase; }
+  .settings-item { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid var(--border); gap: 12px; }
   .settings-item:last-child { border-bottom: none; }
   .settings-label { font-size: 14px; color: var(--text); }
   .settings-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
-  .settings-item input[type=text] {
-    background: var(--bg3);
-    border: 0.5px solid var(--border2);
-    border-radius: var(--r3);
-    padding: 7px 12px;
-    color: var(--text);
-    font-size: 13px;
-    outline: none;
-    font-family: var(--font-body);
-    width: 200px;
-  }
+  .settings-item input[type=text] { background: var(--bg3); border: 0.5px solid var(--border2); border-radius: var(--r3); padding: 7px 12px; color: var(--text); font-size: 13px; outline: none; font-family: var(--font-body); width: 200px; }
   .settings-item input[type=text]:focus { border-color: var(--accent); }
-  .toggle {
-    width: 44px; height: 24px;
-    background: var(--bg4);
-    border-radius: 12px;
-    cursor: pointer;
-    position: relative;
-    transition: background 0.2s;
-    border: 0.5px solid var(--border2);
-    flex-shrink: 0;
-  }
+  .toggle { width: 44px; height: 24px; background: var(--bg4); border-radius: 12px; cursor: pointer; position: relative; transition: background 0.2s; border: 0.5px solid var(--border2); flex-shrink: 0; }
   .toggle.on { background: var(--accent); border-color: var(--accent); }
-  .toggle::after {
-    content: '';
-    position: absolute; top: 3px; left: 3px;
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    background: white;
-    transition: transform 0.2s;
-  }
+  .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: white; transition: transform 0.2s; }
   .toggle.on::after { transform: translateX(20px); }
 
-  /* ─── INFO BADGES ─── */
-  .info-strip {
-    display: flex;
-    gap: 8px;
-    padding: 8px 20px;
-    border-bottom: 0.5px solid var(--border);
-    flex-shrink: 0;
-    flex-wrap: wrap;
-    background: var(--bg);
-  }
-  .info-badge {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: var(--bg3);
-    border: 0.5px solid var(--border);
-    border-radius: 20px;
-    padding: 4px 10px;
-    font-size: 11px;
-    color: var(--text2);
-  }
+  /* ── INFO STRIP ── */
+  .info-strip { display: flex; gap: 8px; padding: 8px 20px; border-bottom: 0.5px solid var(--border); flex-shrink: 0; flex-wrap: wrap; background: var(--bg); }
+  .info-badge { display: flex; align-items: center; gap: 5px; background: var(--bg3); border: 0.5px solid var(--border); border-radius: 20px; padding: 4px 10px; font-size: 11px; color: var(--text2); }
   .info-badge .badge-icon { font-size: 12px; }
 
-  /* ─── EMPTY STATE ─── */
-  .empty-state {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text3);
-    gap: 8px;
-    font-size: 13px;
-  }
+  /* ── EMPTY STATE ── */
+  .empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text3); gap: 8px; font-size: 13px; }
   .empty-state-icon { font-size: 32px; opacity: 0.4; }
 
-  /* Responsive */
   @media (max-width: 600px) {
     .sidebar { width: 58px; }
     .nav-label { display: none; }
@@ -772,7 +586,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
   <div class="logo">
     <div class="logo-icon">✦</div>
@@ -783,20 +596,17 @@
     <span id="status-text">Ready</span>
   </div>
   <div class="header-right">
-    <div class="icon-btn" id="theme-btn" title="Toggle theme">☀️</div>
     <div class="icon-btn" onclick="showAbout()" title="About">ℹ️</div>
   </div>
 </header>
 
-<!-- API KEY BAR -->
 <div class="api-bar">
   <label>Gemini API Key (Free):</label>
   <input type="password" id="gemini-key-input" placeholder="AIza..." />
-  <button class="save-key-btn" onclick="saveKeys()">Save Keys</button>
+  <button class="save-key-btn" onclick="saveKeys()">Save Key</button>
   <a href="https://aistudio.google.com/app/apikey" target="_blank" style="font-size:11px; color:var(--accent2); text-decoration:none;">Get free key ↗</a>
 </div>
 
-<!-- INFO STRIP -->
 <div class="info-strip">
   <div class="info-badge"><span class="badge-icon">🕐</span><span id="live-time">--:--</span></div>
   <div class="info-badge"><span class="badge-icon">📅</span><span id="live-date">--</span></div>
@@ -804,10 +614,7 @@
   <div class="info-badge"><span class="badge-icon">📋</span><span id="tasks-count">0 tasks</span></div>
 </div>
 
-<!-- APP BODY -->
 <div class="app-body">
-
-  <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="nav-btn active" onclick="switchPanel('chat')" id="nav-chat">
       <div class="nav-icon">💬</div>
@@ -832,10 +639,9 @@
     </div>
   </nav>
 
-  <!-- CONTENT -->
   <div class="content">
 
-    <!-- ═══ CHAT PANEL ═══ -->
+    <!-- CHAT -->
     <div class="panel active" id="panel-chat">
       <div class="chat-messages" id="chat-messages">
         <div class="welcome-card" id="welcome-card">
@@ -854,7 +660,7 @@
       </div>
       <div class="chat-input-area">
         <div class="input-row">
-          <textarea id="chat-input" rows="1" placeholder="Ask Nova anything... (type or use mic)" onkeydown="handleInputKey(event)" oninput="autoResize(this)"></textarea>
+          <textarea id="chat-input" rows="1" placeholder="Ask Nova anything..." onkeydown="handleInputKey(event)" oninput="autoResize(this)"></textarea>
           <div class="input-actions">
             <button class="mic-btn" id="mic-btn" onclick="toggleVoice()" title="Voice input">🎙️</button>
             <button class="send-btn" id="send-btn" onclick="sendMessage()" title="Send">➤</button>
@@ -863,7 +669,7 @@
       </div>
     </div>
 
-    <!-- ═══ TASKS PANEL ═══ -->
+    <!-- TASKS -->
     <div class="panel" id="panel-tasks">
       <div class="panel-header">
         <div class="panel-title">✅ Tasks</div>
@@ -890,7 +696,7 @@
       </div>
     </div>
 
-    <!-- ═══ NOTES PANEL ═══ -->
+    <!-- NOTES -->
     <div class="panel" id="panel-notes">
       <div class="panel-header">
         <div class="panel-title">📝 Notes</div>
@@ -903,7 +709,7 @@
       </div>
     </div>
 
-    <!-- ═══ WEATHER PANEL ═══ -->
+    <!-- WEATHER -->
     <div class="panel" id="panel-weather">
       <div class="panel-header">
         <div class="panel-title">🌤 Weather</div>
@@ -914,15 +720,12 @@
           <button onclick="fetchWeatherCity()">Search</button>
         </div>
         <div id="weather-display">
-          <div class="empty-state">
-            <div class="empty-state-icon">🌍</div>
-            <div>Loading weather...</div>
-          </div>
+          <div class="empty-state"><div class="empty-state-icon">🌍</div><div>Loading weather...</div></div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ SETTINGS PANEL ═══ -->
+    <!-- SETTINGS -->
     <div class="panel" id="panel-settings">
       <div class="panel-header">
         <div class="panel-title">⚙️ Settings</div>
@@ -956,18 +759,14 @@
             <div class="toggle" id="toggle-voice" onclick="toggleSetting('voice')"></div>
           </div>
           <div class="settings-item">
-            <div><div class="settings-label">Proactive Suggestions</div><div class="settings-sub">Nova suggests things based on context</div></div>
-            <div class="toggle on" id="toggle-suggest" onclick="toggleSetting('suggest')"></div>
-          </div>
-          <div class="settings-item">
             <div><div class="settings-label">Remember Conversations</div><div class="settings-sub">Save chat history to localStorage</div></div>
             <div class="toggle on" id="toggle-memory" onclick="toggleSetting('memory')"></div>
           </div>
         </div>
         <div class="settings-section">
-          <div class="settings-section-title">API Keys (Free)</div>
+          <div class="settings-section-title">API Keys</div>
           <div class="settings-item">
-            <div><div class="settings-label">Gemini API Key</div><div class="settings-sub">From Google AI Studio (Free)</div></div>
+            <div><div class="settings-label">Gemini API Key</div><div class="settings-sub">From Google AI Studio (Free) — <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--accent2);">Get key ↗</a></div></div>
             <input type="password" id="settings-gemini-key" placeholder="AIza..." />
           </div>
         </div>
@@ -980,7 +779,7 @@
   </div>
 </div>
 
-<!-- NOTE EDITOR MODAL -->
+<!-- NOTE MODAL -->
 <div class="modal-overlay" id="note-modal">
   <div class="modal">
     <div class="modal-header">
@@ -998,26 +797,22 @@
 
 <script>
 // ════════════════════════════════════════
-// NOVA AI ASSISTANT — CORE ENGINE
+// NOVA — STATE
 // ════════════════════════════════════════
-
-// ── STATE ──
-let novaState = {
+let S = {
   geminiKey: '',
   userName: 'Friend',
   userCity: 'Lahore',
   userLang: 'en',
   voiceEnabled: false,
-  suggestEnabled: true,
   memoryEnabled: true,
   chatHistory: [],
   tasks: [],
   notes: [],
   weatherData: null,
   currentNote: null,
-  recognition: null,
   isRecording: false,
-  settings: { voice: false, suggest: true, memory: true }
+  recognition: null
 };
 
 // ── INIT ──
@@ -1025,116 +820,104 @@ function init() {
   loadState();
   updateClock();
   setInterval(updateClock, 1000);
-  fetchWeather(novaState.userCity);
+  fetchWeather(S.userCity);
   renderTasks();
   renderNotes();
-  syncSettingsUI();
-  loadChatHistory();
+  syncToggles();
 }
 
 function loadState() {
-  const saved = localStorage.getItem('nova_state');
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      Object.assign(novaState, parsed);
-    } catch(e) {}
-  }
-  // Also check input fields
-  document.getElementById('gemini-key-input').value = novaState.geminiKey || '';
-  document.getElementById('user-name').value = novaState.userName || '';
-  document.getElementById('user-city').value = novaState.userCity || 'Lahore';
-  document.getElementById('user-lang').value = novaState.userLang || 'en';
-  document.getElementById('settings-gemini-key').value = novaState.geminiKey || '';
+  try {
+    const saved = localStorage.getItem('nova_v2');
+    if (saved) Object.assign(S, JSON.parse(saved));
+  } catch(e) {}
+  document.getElementById('gemini-key-input').value = S.geminiKey || '';
+  document.getElementById('settings-gemini-key').value = S.geminiKey || '';
+  document.getElementById('user-name').value = S.userName || '';
+  document.getElementById('user-city').value = S.userCity || 'Lahore';
+  document.getElementById('user-lang').value = S.userLang || 'en';
 }
 
-function saveState() {
-  localStorage.setItem('nova_state', JSON.stringify(novaState));
+function save() {
+  localStorage.setItem('nova_v2', JSON.stringify(S));
 }
 
 function saveKeys() {
-  novaState.geminiKey = document.getElementById('gemini-key-input').value.trim();
-  saveState();
-  showToast('API key saved! ✓');
+  S.geminiKey = document.getElementById('gemini-key-input').value.trim();
+  save();
+  showToast('✓ API key saved!');
 }
 
 function saveSettings() {
-  novaState.userName = document.getElementById('user-name').value.trim() || 'Friend';
-  novaState.userCity = document.getElementById('user-city').value.trim() || 'Lahore';
-  novaState.userLang = document.getElementById('user-lang').value;
+  S.userName = document.getElementById('user-name').value.trim() || 'Friend';
+  S.userCity = document.getElementById('user-city').value.trim() || 'Lahore';
+  S.userLang = document.getElementById('user-lang').value;
   const k = document.getElementById('settings-gemini-key').value.trim();
-  if (k) novaState.geminiKey = k;
-  document.getElementById('gemini-key-input').value = novaState.geminiKey;
-  saveState();
-  showToast('Settings saved! ✓');
+  if (k) { S.geminiKey = k; document.getElementById('gemini-key-input').value = k; }
+  save();
+  showToast('✓ Settings saved!');
 }
 
 // ── CLOCK ──
 function updateClock() {
-  const now = new Date();
-  document.getElementById('live-time').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  document.getElementById('live-date').textContent = now.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+  const n = new Date();
+  document.getElementById('live-time').textContent = n.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  document.getElementById('live-date').textContent = n.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});
 }
 
-// ── PANEL SWITCHING ──
+// ── PANELS ──
 function switchPanel(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
   document.getElementById('nav-' + name).classList.add('active');
-  if (name === 'weather' && !novaState.weatherData) fetchWeather(novaState.userCity);
+  if (name === 'weather') renderWeatherPanel();
 }
 
-// ── WEATHER (Open-Meteo — 100% Free, No Key) ──
-const weatherCodes = {
-  0: ['☀️','Clear sky'], 1:['🌤','Mainly clear'], 2:['⛅','Partly cloudy'], 3:['☁️','Overcast'],
+// ── WEATHER ──
+const WC = {
+  0:['☀️','Clear sky'], 1:['🌤','Mainly clear'], 2:['⛅','Partly cloudy'], 3:['☁️','Overcast'],
   45:['🌫','Fog'], 48:['🌫','Icy fog'], 51:['🌦','Light drizzle'], 53:['🌧','Drizzle'],
-  55:['🌧','Heavy drizzle'], 61:['🌧','Slight rain'], 63:['🌧','Moderate rain'],
-  65:['🌧','Heavy rain'], 71:['🌨','Slight snow'], 73:['❄️','Moderate snow'],
-  75:['❄️','Heavy snow'], 80:['🌦','Rain showers'], 81:['🌧','Heavy showers'],
-  95:['⛈','Thunderstorm'], 96:['⛈','Thunderstorm w/ hail'], 99:['⛈','Heavy thunderstorm']
+  61:['🌧','Slight rain'], 63:['🌧','Moderate rain'], 65:['🌧','Heavy rain'],
+  71:['🌨','Slight snow'], 73:['❄️','Moderate snow'], 75:['❄️','Heavy snow'],
+  80:['🌦','Rain showers'], 81:['🌧','Heavy showers'], 95:['⛈','Thunderstorm']
 };
 
 async function fetchWeather(city) {
   try {
     document.getElementById('live-weather').textContent = 'Loading...';
     const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`);
-    const geoData = await geo.json();
-    if (!geoData.results || !geoData.results.length) {
-      document.getElementById('live-weather').textContent = 'City not found';
-      return;
-    }
-    const { latitude, longitude, name, country } = geoData.results[0];
+    const gd = await geo.json();
+    if (!gd.results?.length) { document.getElementById('live-weather').textContent = 'Not found'; return; }
+    const {latitude, longitude, name, country} = gd.results[0];
     const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=5`);
-    const data = await res.json();
-    const cur = data.current;
-    const daily = data.daily;
-    const [icon, desc] = weatherCodes[cur.weathercode] || ['🌡️', 'Unknown'];
-    novaState.weatherData = { temp: Math.round(cur.temperature_2m), icon, desc, humidity: cur.relative_humidity_2m, wind: Math.round(cur.wind_speed_10m), city: `${name}, ${country}`, daily };
-    saveState();
-    document.getElementById('live-weather').textContent = `${icon} ${Math.round(cur.temperature_2m)}°C`;
+    const d = await res.json();
+    const cur = d.current;
+    const [icon, desc] = WC[cur.weathercode] || ['🌡️','Unknown'];
+    S.weatherData = {temp:Math.round(cur.temperature_2m), icon, desc, humidity:cur.relative_humidity_2m, wind:Math.round(cur.wind_speed_10m), city:`${name}, ${country}`, daily:d.daily};
+    save();
+    document.getElementById('live-weather').textContent = `${icon} ${S.weatherData.temp}°C`;
     renderWeatherPanel();
   } catch(e) {
-    document.getElementById('live-weather').textContent = 'Weather error';
+    document.getElementById('live-weather').textContent = 'Error';
   }
 }
 
 function fetchWeatherCity() {
-  const city = document.getElementById('city-input').value.trim() || 'Lahore';
-  fetchWeather(city);
+  fetchWeather(document.getElementById('city-input').value.trim() || 'Lahore');
 }
 
 function renderWeatherPanel() {
-  const w = novaState.weatherData;
+  const w = S.weatherData;
   if (!w) return;
   const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  let forecastHTML = '';
+  let fc = '';
   if (w.daily) {
     for (let i = 1; i < Math.min(6, w.daily.time.length); i++) {
-      const d = new Date(w.daily.time[i]);
-      const [fi, fd] = weatherCodes[w.daily.weathercode[i]] || ['🌡️',''];
-      forecastHTML += `<div class="forecast-day">
-        <div class="forecast-day-name">${days[d.getDay()]}</div>
+      const dd = new Date(w.daily.time[i]);
+      const [fi] = WC[w.daily.weathercode[i]] || ['🌡️'];
+      fc += `<div class="forecast-day">
+        <div class="forecast-day-name">${days[dd.getDay()]}</div>
         <div class="forecast-day-icon">${fi}</div>
         <div class="forecast-day-temp">${Math.round(w.daily.temperature_2m_max[i])}°</div>
         <div class="forecast-day-low">${Math.round(w.daily.temperature_2m_min[i])}°</div>
@@ -1154,139 +937,87 @@ function renderWeatherPanel() {
         </div>
       </div>
     </div>
-    <div class="weather-forecast">${forecastHTML}</div>`;
+    <div class="weather-forecast">${fc}</div>`;
 }
 
 // ── TASKS ──
 function renderTasks() {
   const list = document.getElementById('tasks-list');
-  const tasks = novaState.tasks;
+  const tasks = S.tasks;
   document.getElementById('tasks-count').textContent = `${tasks.filter(t=>!t.done).length} tasks`;
   if (!tasks.length) {
-    list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">✅</div><div>No tasks yet. Add one!</div></div>`;
+    list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">✅</div><div>No tasks yet!</div></div>`;
     return;
   }
   list.innerHTML = tasks.map((t, i) => `
-    <div class="task-item ${t.done ? 'done' : ''}">
-      <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask(${i})">${t.done ? '✓' : ''}</div>
+    <div class="task-item ${t.done?'done':''}">
+      <div class="task-check ${t.done?'checked':''}" onclick="toggleTask(${i})">${t.done?'✓':''}</div>
       <div class="task-body">
-        <div class="task-title">${escHtml(t.title)}</div>
+        <div class="task-title">${esc(t.title)}</div>
         <div class="task-meta">
           <span class="task-tag tag-${t.tag}">${t.tag}</span>
-          ${t.date ? `<span class="task-date">📅 ${t.date}</span>` : ''}
+          ${t.date?`<span class="task-date">📅 ${t.date}</span>`:''}
         </div>
       </div>
       <button class="task-del" onclick="deleteTask(${i})">✕</button>
     </div>`).join('');
 }
-
 function toggleTaskForm() {
   const f = document.getElementById('add-task-form');
   f.classList.toggle('open');
   if (f.classList.contains('open')) document.getElementById('task-input').focus();
 }
-
 function addTask() {
   const title = document.getElementById('task-input').value.trim();
   if (!title) return;
-  novaState.tasks.unshift({
-    id: Date.now(),
-    title,
-    tag: document.getElementById('task-tag').value,
-    date: document.getElementById('task-date').value,
-    done: false,
-    created: new Date().toISOString()
-  });
+  S.tasks.unshift({id:Date.now(), title, tag:document.getElementById('task-tag').value, date:document.getElementById('task-date').value, done:false});
   document.getElementById('task-input').value = '';
   document.getElementById('task-date').value = '';
-  toggleTaskForm();
-  renderTasks();
-  saveState();
+  toggleTaskForm(); renderTasks(); save();
 }
-
-function toggleTask(i) {
-  novaState.tasks[i].done = !novaState.tasks[i].done;
-  renderTasks(); saveState();
-}
-
-function deleteTask(i) {
-  novaState.tasks.splice(i, 1);
-  renderTasks(); saveState();
-}
+function toggleTask(i) { S.tasks[i].done = !S.tasks[i].done; renderTasks(); save(); }
+function deleteTask(i) { S.tasks.splice(i,1); renderTasks(); save(); }
 
 // ── NOTES ──
 function renderNotes() {
   const grid = document.getElementById('notes-grid');
-  const notes = novaState.notes;
   let html = `<div class="add-note-card" onclick="openNote(null)"><span style="font-size:24px">＋</span><span>New Note</span></div>`;
-  html += notes.map((n, i) => `
+  html += S.notes.map((n,i) => `
     <div class="note-card" onclick="openNote(${i})">
-      <div class="note-card-title">${escHtml(n.title || 'Untitled')}</div>
-      <div class="note-card-preview">${escHtml(n.body || '').substring(0, 100)}</div>
+      <div class="note-card-title">${esc(n.title||'Untitled')}</div>
+      <div class="note-card-preview">${esc((n.body||'').substring(0,100))}</div>
       <div class="note-card-date">${new Date(n.updated).toLocaleDateString()}</div>
-      <button class="note-card-del" onclick="event.stopPropagation(); deleteNote(${i})">✕</button>
+      <button class="note-card-del" onclick="event.stopPropagation();deleteNote(${i})">✕</button>
     </div>`).join('');
   grid.innerHTML = html;
 }
-
 function openNote(i) {
-  novaState.currentNote = i;
-  const n = i !== null ? novaState.notes[i] : null;
-  document.getElementById('note-title-input').value = n ? n.title : '';
-  document.getElementById('note-body-input').value = n ? n.body : '';
+  S.currentNote = i;
+  const n = i!==null ? S.notes[i] : null;
+  document.getElementById('note-title-input').value = n?n.title:'';
+  document.getElementById('note-body-input').value = n?n.body:'';
   document.getElementById('note-modal').classList.add('open');
-  setTimeout(() => document.getElementById(n ? 'note-body-input' : 'note-title-input').focus(), 100);
+  setTimeout(() => document.getElementById(n?'note-body-input':'note-title-input').focus(), 100);
 }
-
-function closeNote() {
-  document.getElementById('note-modal').classList.remove('open');
-}
-
+function closeNote() { document.getElementById('note-modal').classList.remove('open'); }
 function saveNote() {
   const title = document.getElementById('note-title-input').value.trim() || 'Untitled';
   const body = document.getElementById('note-body-input').value.trim();
-  const note = { title, body, updated: new Date().toISOString() };
-  if (novaState.currentNote !== null) {
-    novaState.notes[novaState.currentNote] = note;
-  } else {
-    novaState.notes.unshift(note);
-  }
-  closeNote();
-  renderNotes();
-  saveState();
+  const note = {title, body, updated: new Date().toISOString()};
+  if (S.currentNote !== null) S.notes[S.currentNote] = note;
+  else S.notes.unshift(note);
+  closeNote(); renderNotes(); save();
 }
-
-function deleteNote(i) {
-  novaState.notes.splice(i, 1);
-  renderNotes(); saveState();
-}
+function deleteNote(i) { S.notes.splice(i,1); renderNotes(); save(); }
 
 // ── CHAT ──
-function loadChatHistory() {
-  if (!novaState.memoryEnabled) return;
-  const saved = localStorage.getItem('nova_chat');
-  if (saved) {
-    try { novaState.chatHistory = JSON.parse(saved); } catch(e) {}
-  }
-}
-
-function saveChatHistory() {
-  if (novaState.memoryEnabled) {
-    // Keep last 40 messages
-    const trimmed = novaState.chatHistory.slice(-40);
-    localStorage.setItem('nova_chat', JSON.stringify(trimmed));
-  }
-}
-
 function handleInputKey(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 }
-
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
-
 function quickSend(text) {
   document.getElementById('chat-input').value = text;
   sendMessage();
@@ -1299,39 +1030,38 @@ async function sendMessage() {
   input.value = ''; input.style.height = 'auto';
   document.getElementById('send-btn').disabled = true;
   document.getElementById('welcome-card')?.remove();
-  document.getElementById('status-text').textContent = 'Thinking...';
-  addMsgToUI('user', text);
-  const typingEl = showTyping();
+  setStatus('Thinking...');
+  addMsg('user', text);
+  const typing = showTyping();
   const reply = await novaReply(text);
-  typingEl.remove();
-  addMsgToUI('nova', reply);
+  typing.remove();
+  addMsg('nova', reply);
   document.getElementById('send-btn').disabled = false;
-  document.getElementById('status-text').textContent = 'Ready';
-  if (novaState.voiceEnabled) speak(reply);
+  setStatus('Ready');
+  if (S.voiceEnabled) speak(reply);
 }
 
-function addMsgToUI(role, text) {
+function addMsg(role, text) {
   const msgs = document.getElementById('chat-messages');
   const div = document.createElement('div');
   div.className = `msg ${role}`;
-  const now = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+  const t = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
   div.innerHTML = `
-    <div class="msg-avatar">${role === 'user' ? '👤' : '✦'}</div>
+    <div class="msg-avatar">${role==='user'?'👤':'✦'}</div>
     <div>
-      <div class="msg-bubble">${formatMsgText(text)}</div>
-      <div class="msg-time">${now}</div>
+      <div class="msg-bubble">${fmt(text)}</div>
+      <div class="msg-time">${t}</div>
     </div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
-  novaState.chatHistory.push({ role: role === 'user' ? 'user' : 'assistant', content: text });
-  saveChatHistory();
+  S.chatHistory.push({role: role==='user'?'user':'model', text});
+  if (S.memoryEnabled) localStorage.setItem('nova_chat', JSON.stringify(S.chatHistory.slice(-40)));
 }
 
 function showTyping() {
   const msgs = document.getElementById('chat-messages');
   const div = document.createElement('div');
   div.className = 'msg nova';
-  div.id = 'typing-msg';
   div.innerHTML = `<div class="msg-avatar">✦</div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
@@ -1340,191 +1070,191 @@ function showTyping() {
 
 // ── NOVA BRAIN ──
 async function novaReply(text) {
-  const lower = text.toLowerCase();
+  const q = text.toLowerCase();
 
-  // ── LOCAL INTENTS (no API needed) ──
-  if (/\b(time|what time|current time)\b/.test(lower)) {
-    const now = new Date();
-    return `🕐 It's currently **${now.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' })}**.`;
+  if (/\b(time|what time)\b/.test(q) && !/weather/.test(q)) {
+    const n = new Date();
+    return `🕐 It's **${n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'})}**.`;
   }
-  if (/\b(date|today|what day|what's today)\b/.test(lower) && !/weather/.test(lower)) {
-    const now = new Date();
-    return `📅 Today is **${now.toLocaleDateString([], { weekday:'long', year:'numeric', month:'long', day:'numeric' })}**.`;
+  if (/\b(date|today|what day)\b/.test(q) && !/weather/.test(q)) {
+    return `📅 Today is **${new Date().toLocaleDateString([],{weekday:'long',year:'numeric',month:'long',day:'numeric'})}**.`;
   }
-  if (/\b(weather|temperature|forecast|rain|sunny|hot|cold)\b/.test(lower)) {
-    if (novaState.weatherData) {
-      const w = novaState.weatherData;
-      return `${w.icon} The weather in **${w.city}** is currently **${w.temp}°C** with ${w.desc.toLowerCase()}.\n\n💧 Humidity: ${w.humidity}% | 💨 Wind: ${w.wind} km/h\n\nYou can see the detailed forecast in the Weather tab!`;
+  if (/\b(weather|temperature|forecast)\b/.test(q)) {
+    if (!S.weatherData) await fetchWeather(S.userCity);
+    if (S.weatherData) {
+      const w = S.weatherData;
+      return `${w.icon} **${w.city}**: **${w.temp}°C**, ${w.desc}.\n💧 Humidity: ${w.humidity}% | 💨 Wind: ${w.wind} km/h\n\nCheck the Weather tab for the 5-day forecast!`;
     }
-    await fetchWeather(novaState.userCity);
-    if (novaState.weatherData) {
-      const w = novaState.weatherData;
-      return `${w.icon} Current weather in **${w.city}**: **${w.temp}°C**, ${w.desc.toLowerCase()}. Humidity: ${w.humidity}%.`;
-    }
-    return "I couldn't fetch the weather right now. Check the Weather tab directly.";
+    return "Couldn't fetch weather. Check the Weather tab directly.";
   }
-  if (/\b(show|list|my) tasks\b/.test(lower) || /\btask list\b/.test(lower)) {
-    const pending = novaState.tasks.filter(t => !t.done);
-    if (!pending.length) return "✅ You have no pending tasks! You're all caught up.";
-    return `📋 You have **${pending.length}** pending task${pending.length>1?'s':''}:\n\n${pending.map((t,i) => `${i+1}. ${t.title}${t.date ? ` (due ${t.date})` : ''}`).join('\n')}\n\nSwitch to the Tasks tab to manage them!`;
+  if (/show.*tasks|task list|my tasks/.test(q)) {
+    const pending = S.tasks.filter(t=>!t.done);
+    if (!pending.length) return "✅ No pending tasks — you're all caught up!";
+    return `📋 **${pending.length} pending task${pending.length>1?'s':''}:**\n\n${pending.map((t,i)=>`${i+1}. ${t.title}${t.date?` (due ${t.date})`:''}`).join('\n')}`;
   }
-  if (/add task[:\s]+(.+)/i.test(text)) {
-    const title = text.match(/add task[:\s]+(.+)/i)[1].trim();
-    novaState.tasks.unshift({ id: Date.now(), title, tag: 'personal', done: false, created: new Date().toISOString() });
-    renderTasks(); saveState();
-    return `✅ Added task: **"${title}"**! You can see it in the Tasks tab.`;
+  const addMatch = text.match(/add task[:\s]+(.+)/i);
+  if (addMatch) {
+    const title = addMatch[1].trim();
+    S.tasks.unshift({id:Date.now(),title,tag:'personal',done:false});
+    renderTasks(); save();
+    return `✅ Added: **"${title}"**`;
   }
-  if (/\b(notes?|my notes|show notes)\b/.test(lower) && /\b(show|list|open)\b/.test(lower)) {
-    if (!novaState.notes.length) return "📝 You have no notes yet. Tap the Notes tab to create one!";
-    return `📝 You have **${novaState.notes.length}** note${novaState.notes.length>1?'s':''}:\n\n${novaState.notes.slice(0,5).map((n,i)=>`${i+1}. **${n.title}**`).join('\n')}\n\nOpen the Notes tab to view and edit them!`;
+  if (/hello|hi|hey|salaam/i.test(q)) {
+    return `Hey ${S.userName}! 👋 What can I help you with today?`;
   }
-  if (/what can you do|your capabilities|help me|how to use/i.test(lower)) {
-    return `I'm **Nova**, your personal AI assistant! Here's what I can do:\n\n💬 **Chat** — Answer questions, give advice, help with writing\n📅 **Date & Time** — Just ask!\n🌤 **Weather** — Real-time weather for any city\n✅ **Tasks** — "Add task: call doctor" or check the Tasks tab\n📝 **Notes** — Take and organize notes in the Notes tab\n📧 **Email drafts** — Ask me to write an email\n🔍 **Research** — Answer knowledge questions\n🌐 **Multi-language** — Talk to me in Urdu, Arabic, etc.\n\nI'm powered by **Gemini AI (free)** + local tools. Try asking me anything!`;
-  }
-  if (/\b(hello|hi|hey|salaam|asslam|namaste)\b/i.test(lower)) {
-    const greetings = [`Hey ${novaState.userName}! 👋 Great to hear from you. What can I help you with today?`, `Hello ${novaState.userName}! ✦ I'm here and ready. What's on your mind?`, `Salaam ${novaState.userName}! 🌟 How can I assist you right now?`];
-    return greetings[Math.floor(Math.random() * greetings.length)];
-  }
-  if (/\b(urdu|roman urdu|اردو)\b/i.test(lower)) {
-    return `Han zaroor! Main Urdu mein bhi baat kar sakta hun. Batao kya madad chahiye? 😊\n\nAap mujhse kisi bhi topic pe pooch sakte hain — weather, tasks, ya koi bhi sawaal!`;
+  if (/what can you do|capabilities|help/i.test(q)) {
+    return `I'm **Nova**! Here's what I can do:\n\n💬 Answer any question (via Gemini AI)\n📅 Tell you the date & time\n🌤 Live weather for any city\n✅ Manage your tasks\n📝 Take notes\n🎙️ Voice input & speech output\n\nJust ask!`;
   }
 
-  // ── GEMINI API ──
-  if (novaState.geminiKey) {
-    return await callGemini(text);
-  }
+  // ── GEMINI API CALL ──
+  if (S.geminiKey) return await callGemini(text);
 
-  // ── FALLBACK ──
-  return `I'd love to give you a smarter answer, but I need a **Gemini API key** (free!) to access my full AI brain.\n\nEnter your key in the bar at the top — get it free at **aistudio.google.com**.\n\nFor now, I can still help with:\n• ⏰ Time & date\n• 🌤 Weather\n• ✅ Tasks & notes\n• Basic questions`;
+  return `I need a **Gemini API key** to answer that.\n\nPaste your free key in the bar at the top → **[Get it here](https://aistudio.google.com/app/apikey)**\n\nWithout it I can still handle:\n• Time & date • Weather • Tasks • Notes`;
 }
 
-// ── GEMINI FREE API ──
+// ════════════════════════════════════════
+// GEMINI API — FIXED
+// Key fix: systemInstruction (camelCase) not system_instruction
+// Matches the working Gemini REST API spec
+// ════════════════════════════════════════
 async function callGemini(userMessage) {
+  setStatus('Asking Gemini...');
   try {
-    document.getElementById('status-text').textContent = 'Calling Gemini...';
-    const userName = novaState.userName;
-    const city = novaState.userCity;
     const now = new Date();
-    const systemContext = `You are Nova, a friendly, smart, and personalized AI assistant for ${userName}. You are concise, warm, and helpful. The user is from ${city}. Current date: ${now.toDateString()}, Time: ${now.toLocaleTimeString()}. ${novaState.weatherData ? `Current weather in ${city}: ${novaState.weatherData.temp}°C, ${novaState.weatherData.desc}.` : ''} Keep responses under 200 words unless asked for detail. Use markdown formatting (bold, lists) where helpful. If asked in Urdu or another language, respond in that language.`;
-    
-    // Build conversation history for context
-    const historyMessages = novaState.chatHistory.slice(-10).map(m => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }]
-    }));
+    const systemPrompt = `You are Nova, a friendly and smart personal AI assistant for ${S.userName}. Be concise and warm. The user is from ${S.userCity}. Current date: ${now.toDateString()}, time: ${now.toLocaleTimeString()}. ${S.weatherData ? `Weather in ${S.userCity}: ${S.weatherData.temp}°C, ${S.weatherData.desc}.` : ''} Keep replies under 200 words unless asked for detail. Use **bold** and line breaks for clarity. If the user writes in Urdu or another language, reply in that language.`;
+
+    // Build history — only include well-formed alternating pairs
+    const rawHistory = S.chatHistory.slice(-12);
+    const contents = [];
+    for (let i = 0; i < rawHistory.length; i++) {
+      const m = rawHistory[i];
+      const role = m.role === 'user' ? 'user' : 'model';
+      // Skip consecutive same-role entries to keep strict alternation
+      if (contents.length > 0 && contents[contents.length-1].role === role) continue;
+      contents.push({ role, parts: [{ text: m.text || m.content || '' }] });
+    }
+    // Always end with the current user message
+    if (contents.length === 0 || contents[contents.length-1].role !== 'user') {
+      contents.push({ role: 'user', parts: [{ text: userMessage }] });
+    } else {
+      contents[contents.length-1] = { role: 'user', parts: [{ text: userMessage }] };
+    }
 
     const body = {
-      system_instruction: { parts: [{ text: systemContext }] },
-      contents: [
-        ...historyMessages,
-        { role: 'user', parts: [{ text: userMessage }] }
-      ],
-      generationConfig: { maxOutputTokens: 500, temperature: 0.7 }
+      // ✅ FIXED: camelCase systemInstruction — matches Gemini REST API
+      systemInstruction: {
+        parts: [{ text: systemPrompt }]
+      },
+      contents,
+      generationConfig: {
+        maxOutputTokens: 500,
+        temperature: 0.7
+      }
     };
 
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${novaState.geminiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${S.geminiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      }
+    );
 
     const data = await res.json();
-    if (data.error) return `⚠️ Gemini error: ${data.error.message}. Check your API key.`;
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't get a response. Try again!";
+
+    // Detailed error feedback
+    if (data.error) {
+      const code = data.error.code;
+      const msg = data.error.message;
+      if (code === 400) return `⚠️ Bad request: ${msg}\n\nCheck your API key is valid.`;
+      if (code === 403) return `⚠️ API key rejected (403). Make sure you copied the full key correctly.`;
+      if (code === 429) return `⚠️ Rate limit hit (429). Wait a moment and try again.`;
+      return `⚠️ Gemini error ${code}: ${msg}`;
+    }
+
+    return data?.candidates?.[0]?.content?.parts?.[0]?.text || "I didn't get a response — please try again.";
+
   } catch (e) {
-    return `⚠️ Network error calling Gemini. Check your internet connection.\n\nError: ${e.message}`;
+    return `⚠️ Network error: ${e.message}\n\nCheck your internet connection.`;
   }
 }
 
 // ── VOICE INPUT ──
 function toggleVoice() {
   if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-    showToast('Voice not supported in this browser. Try Chrome!');
-    return;
+    showToast('Voice not supported — use Chrome!'); return;
   }
-  if (novaState.isRecording) {
-    novaState.recognition?.stop();
-    return;
-  }
+  if (S.isRecording) { S.recognition?.stop(); return; }
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SR();
-  recognition.lang = novaState.userLang === 'ur' ? 'ur-PK' : 'en-US';
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  recognition.onstart = () => {
-    novaState.isRecording = true;
+  const r = new SR();
+  r.lang = S.userLang === 'ur' ? 'ur-PK' : 'en-US';
+  r.continuous = false; r.interimResults = false;
+  r.onstart = () => {
+    S.isRecording = true;
     document.getElementById('mic-btn').classList.add('recording');
     document.getElementById('mic-btn').textContent = '🔴';
-    document.getElementById('status-text').textContent = 'Listening...';
+    setStatus('Listening...');
   };
-  recognition.onresult = (e) => {
-    const transcript = e.results[0][0].transcript;
-    document.getElementById('chat-input').value = transcript;
+  r.onresult = (e) => {
+    const t = e.results[0][0].transcript;
+    document.getElementById('chat-input').value = t;
     autoResize(document.getElementById('chat-input'));
     sendMessage();
   };
-  recognition.onend = () => {
-    novaState.isRecording = false;
+  r.onend = () => {
+    S.isRecording = false;
     document.getElementById('mic-btn').classList.remove('recording');
     document.getElementById('mic-btn').textContent = '🎙️';
-    document.getElementById('status-text').textContent = 'Ready';
+    setStatus('Ready');
   };
-  recognition.onerror = (e) => {
-    showToast('Voice error: ' + e.error);
-    recognition.stop();
-  };
-  novaState.recognition = recognition;
-  recognition.start();
+  r.onerror = (e) => { showToast('Voice error: ' + e.error); r.stop(); };
+  S.recognition = r;
+  r.start();
 }
 
-// ── TEXT TO SPEECH ──
+// ── TTS ──
 function speak(text) {
   if (!window.speechSynthesis) return;
-  const clean = text.replace(/\*\*/g, '').replace(/#+/g, '').replace(/\n/g, ' ');
-  const utter = new SpeechSynthesisUtterance(clean.substring(0, 300));
-  utter.lang = novaState.userLang === 'ur' ? 'ur-PK' : 'en-US';
-  utter.rate = 0.95;
-  window.speechSynthesis.speak(utter);
+  const clean = text.replace(/\*\*/g,'').replace(/\n/g,' ');
+  const u = new SpeechSynthesisUtterance(clean.substring(0,300));
+  u.lang = S.userLang === 'ur' ? 'ur-PK' : 'en-US';
+  u.rate = 0.95;
+  window.speechSynthesis.speak(u);
 }
 
-// ── SETTINGS TOGGLES ──
+// ── SETTINGS ──
 function toggleSetting(key) {
-  novaState.settings[key] = !novaState.settings[key];
-  if (key === 'voice') novaState.voiceEnabled = novaState.settings[key];
-  if (key === 'suggest') novaState.suggestEnabled = novaState.settings[key];
-  if (key === 'memory') novaState.memoryEnabled = novaState.settings[key];
-  document.getElementById('toggle-' + key).classList.toggle('on', novaState.settings[key]);
-  saveState();
+  if (key === 'voice') S.voiceEnabled = !S.voiceEnabled;
+  if (key === 'memory') S.memoryEnabled = !S.memoryEnabled;
+  document.getElementById('toggle-' + key).classList.toggle('on',
+    key === 'voice' ? S.voiceEnabled : S.memoryEnabled);
+  save();
 }
-
-function syncSettingsUI() {
-  ['voice','suggest','memory'].forEach(k => {
-    const val = k === 'voice' ? novaState.voiceEnabled : k === 'suggest' ? novaState.suggestEnabled : novaState.memoryEnabled;
-    document.getElementById('toggle-' + k).classList.toggle('on', val);
-  });
+function syncToggles() {
+  document.getElementById('toggle-voice').classList.toggle('on', S.voiceEnabled);
+  document.getElementById('toggle-memory').classList.toggle('on', S.memoryEnabled);
 }
 
 // ── UTILS ──
-function escHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function formatMsgText(t) {
-  return escHtml(t)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n/g, '<br>');
+function esc(t) { return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmt(t) {
+  return esc(t).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
 }
+function setStatus(t) { document.getElementById('status-text').textContent = t; }
 function showToast(msg) {
-  const t = document.createElement('div');
-  t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--accent);color:white;padding:10px 18px;border-radius:20px;font-size:13px;z-index:999;animation:msgIn 0.2s ease;pointer-events:none;';
-  t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(() => t.remove(), 2500);
+  const d = document.createElement('div');
+  d.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--accent);color:white;padding:10px 18px;border-radius:20px;font-size:13px;z-index:999;pointer-events:none;animation:msgIn 0.2s ease;';
+  d.textContent = msg;
+  document.body.appendChild(d);
+  setTimeout(() => d.remove(), 2500);
 }
 function showAbout() {
   switchPanel('chat');
   document.getElementById('welcome-card')?.remove();
-  addMsgToUI('nova', `**Nova AI Assistant** ✦\n\nBuilt with:\n• 🤖 **Gemini 2.0 Flash** (Google AI — Free)\n• 🌤 **Open-Meteo** (Weather — 100% Free)\n• 🎙️ **Web Speech API** (Voice — Built-in)\n• 💾 **localStorage** (Memory — Local)\n\nNo subscriptions. No paid APIs required.\nAll data stored locally on your device.\n\nVersion 1.0 — Made for you, ${novaState.userName}!`);
+  addMsg('nova', `**Nova AI Assistant** ✦\n\nPowered by:\n• 🤖 **Gemini 2.5 Flash Lite** (Google AI — Free)\n• 🌤 **Open-Meteo** (Weather — 100% Free)\n• 🎙️ **Web Speech API** (Voice)\n• 💾 **localStorage** (Memory)\n\nNo subscriptions. All data stays on your device.\n\nHello, ${S.userName}! 👋`);
 }
 
-// ── LAUNCH ──
 init();
 </script>
 </body>
